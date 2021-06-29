@@ -1,0 +1,8 @@
+python=3.7.4=h5263a28_0
+python-dateutil=2.8.0=py37_0
+python-libarchive-c=2.8=py37_13
+python-utils=2.3.0=pypi_0
+requests=2.22.0=py37_0
+selenium=3.141.0=py37hfa6e2cd_1001
+tk=8.6.8=hfa6e2cd_0
+
