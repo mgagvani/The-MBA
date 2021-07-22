@@ -1,4 +1,3 @@
-# scrape the niche.com site for colleges
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -12,18 +11,6 @@ from pandas import DataFrame
 import csv
 import os, sys
 
-#ts%
-
-"""
-if len(sys.argv) < 2:
-    print("Provide the name of a state")
-    sys.exit(1)
-
-state = sys.argv[1]
-print(state)
-#state="georgia"
-#launch url
-"""
 season = "Playoffs"
 year = "2019-20"
 url = f"https://stats.nba.com/players/shooting/?Season={year}&SeasonType={season}&DistanceRange=By%20Zone"
@@ -146,70 +133,3 @@ driver.quit()
    
 
        
-"""
-        #Selenium visits each school
-        schoolpage = driver.get(schoolurl)
-        driver.implicitly_wait(20)
-        
-        #Selenium hands of the source of the specific school page
-        soup_level2=BeautifulSoup(driver.page_source, 'lxml')
-         
-        schoolrecord=[]
-      
-        schoolinfo=soup_level2.find("h1", {"class":"postcard__title"})
-        if schoolinfo != None:
-          schoolname = schoolinfo.get_text(" | ").split("|")[0]
-          schoolrecord.append(schoolname)
-
-        studentinfo=soup_level2.find("section", {"id":"students"})
-        if studentinfo != None:
-          enrollment = studentinfo.get_text(" | ").split("|")[0:3] 
-          schoolrecord.append(enrollment[2])
-        else:
-          schoolrecord.append("0")
-
-        collegetype_list=soup_level2.find_all("a", {"class":"search-tags__wrap__list__tag__a"})
-        for collegetype in collegetype_list: 
-          if collegetype != None and "Public" in collegetype.get_text():
-            schoolrecord.append("Public")
-          elif collegetype != None and "Private" in collegetype.get_text():
-            schoolrecord.append("Private")
-
-        collegelink=soup_level2.find("a", {"class":"profile__website__link"})
-        if collegelink !=None:
-          collegeurl=collegelink.get('href')
-          schoolrecord.append(collegeurl)
-        else:
-          schoolrecord.append("None")
-     
-        print(schoolrecord)
-        datalist.append(schoolrecord)
-        
-        #Ask Selenium to click the back button
-        driver.execute_script("window.history.go(-1)") 
-        #end loop block for this page
-    sys.exit(0)
-        
-    hasnextpage=soup_level1.find("li", {"class":"pagination__next"})
-    if hasnextpage != None:
-        currentpage +=1
-        nexturl=url+"?page="+str(currentpage)
-    else:
-        morePages=False
-            
-        
-    #loop has completed
-
-#end the Selenium browser session
-driver.quit()
-
-#get current working directory
-thedir='/d/dl/scraper/'
-
-header = ['School', 'Enrollment', 'Type', 'URL']
-with open( state + ".csv", "w", newline='') as f:
-    writer = csv.writer(f, delimiter=',')
-    writer.writerow(header)
-    for schoolrecord in datalist:
-        writer.writerow(schoolrecord)
-""" 
